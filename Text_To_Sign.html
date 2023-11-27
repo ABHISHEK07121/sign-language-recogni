@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <style>
+    /* Add your CSS styles here */
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .split {
+      height: 100%;
+      position: fixed;
+      top: 0;
+      width: 50%;
+    }
+    .left {
+      background-color: #1f2833;
+      left: 0;
+    }
+    .right {
+      background-color: #45a29e;
+      right: 0;
+    }
+    .centered {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    #header {
+      font-family: 'Century Gothic', sans-serif;
+      color: #fafafa;
+    }
+    input[type="text"] {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="split left">
+    <div class="centered">
+      <form action="/process_query" method="post">
+        <h1 id="header">Enter your text below:</h1>
+        <input type="text" name="user_input"><br>
+      </form>
+    </div>
+  </div>
+  <div class="split right">
+    <div class="filled">
+      <!-- Check if 'same' is not empty -->
+      {% if same|length == 0 %}
+      <h1 id="header">The translation will appear here!</h1>
+      {% else %}
+      <h1 id="list">'{{og}}' translates to:</h1>
+      {% for s in same %}
+        {% if "static/" in s %}
+        <!-- Display images if 's' contains 'static/' -->
+        <img src="{{ s }}" class="beside" alt="Image">
+        {% else %}
+        <!-- Display text content if 's' does not contain 'static/' -->
+        <p class="signlanguage beside">{{ s }}</p>
+        {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  
+  
+</body>
+</html>
